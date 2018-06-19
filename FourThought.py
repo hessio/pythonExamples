@@ -1,37 +1,17 @@
-import operator
+operators = ['+', '-', '*', '//']
 
-m=int(input())
-ops = { "+": operator.add, "-": operator.sub, "/": operator.floordiv, "*": operator.mul }
-dict_of_symbs = {0: '+', 1: '-', 2: '/', 3: '*'}
-list_of_inputs = []
-for i in range(0, m):
-    list_of_inputs.append(int(input()))
+values = {}
 
-summed = 0
-def find_the_correct_symbols(number_input):
-    summed = 0
-    first = 0
-    second = 0
-    third = 0
-    second_count = 0
-    first_count = 0
-    for i in range(1, 65):
-        summed = 0
-        summed = int(eval('4 ' + str(dict_of_symbs[first]) + ' 4 ' + str( dict_of_symbs[second]) + ' 4 ' + str(dict_of_symbs[third]) + ' 4'))
-        #print(summed)
-        if summed == number_input:
-            return '4 ' + str(dict_of_symbs[first]) + ' 4 ' + str(dict_of_symbs[second]) + ' 4 ' + str(dict_of_symbs[third]) + ' 4 = ' + str(int(summed))
-        third=(third+1)%4
-        first_count += 1
-        second_count += 1
-        if second_count % 4 == 0:
-            second = (second+1)%4
-            second_count = 0
-        if first_count % 16 == 0:
-            first += 1
-            first_count = 0
-    return 'no solution'
+for a in operators:
+    for b in operators:
+        for c in operators:
+            value_string = '4{:s}4{:s}4{:s}4'.format(a,b,c)
+            val = eval(value_string)
+            values[val] = value_string.replace('//', '/') + ' = {:d}'.format(val)
 
-if __name__ == '__main__':
-    for i in list_of_inputs:
-        print(find_the_correct_symbols(i)) 
+for i in range(0, int(input())):
+    user = int(input())
+    if user < -60 or user > 256 or user not in values:
+        print('no solution')
+    else:
+        print(values[user])
